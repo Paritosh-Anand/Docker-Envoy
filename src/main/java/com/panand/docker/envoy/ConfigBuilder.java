@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import com.github.dockerjava.api.command.DockerCmdExecFactory;
 import com.github.dockerjava.core.DockerClientConfig;
+import com.github.dockerjava.core.RemoteApiVersion;
 import com.github.dockerjava.jaxrs.DockerCmdExecFactoryImpl;
 
 public class ConfigBuilder {
@@ -14,15 +15,17 @@ public class ConfigBuilder {
 	}
 
 	public DockerClientConfig generateConfigs() {
+
 		DockerClientConfig clientConfig = DockerClientConfig.createDefaultConfigBuilder()
 				.withDockerHost(properties.getProperty("com.docker.envoy.dockerUri"))
     			.withDockerTlsVerify(true)
     			.withDockerCertPath(properties.getProperty("com.docker.envoy.certpath"))
     			.build();
-		
+
 		return clientConfig;
+
 	}
-	
+
 	public DockerCmdExecFactory generateCmdExecFactory() {
 		@SuppressWarnings("resource")
 		DockerCmdExecFactory dockerCmdExecFactory = new DockerCmdExecFactoryImpl()

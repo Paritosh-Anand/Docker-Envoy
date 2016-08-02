@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.panand.docker.envoy.container.EnvoyProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,20 +18,14 @@ import com.github.dockerjava.core.DockerClientBuilder;
 public class EventListener 
 {
 	private final static Logger logger = LoggerFactory.getLogger(EventListener.class);
-	
-    public static void main(String[] args) throws IOException, InterruptedException, DockerClientException
-    {
-    	Properties properties = new Properties();
-    	FileReader rd = new FileReader("/Users/paritoshanand/Documents/projects/Docker-Envoy/docker.properties");
-        properties.load(rd);	
-    	
-    	logger.info("Listening to Docker events on " + properties.getProperty("com.docker.envoy.dockerUri"));
-    	ConfigBuilder configBuilder = new ConfigBuilder(properties);
-    	
-    	DockerClient dockerClient = DockerClientBuilder.getInstance(configBuilder.generateConfigs())
-    			.withDockerCmdExecFactory(configBuilder.generateCmdExecFactory())
-    			.build();
-    	
-    	dockerClient.eventsCmd().exec(EventCallBack.callback).awaitCompletion().close();
-    }
+	public static void main(String[] args) throws IOException, InterruptedException {
+
+		Properties properties = EnvoyProperties.getEnvoyProperties();
+		DockerClient dockerClient = Client.getDockerClient();
+
+		logger.info("Listening to Docker events on " + properties.getProperty("com.docker.envoy.dockerUri"
+				,"tcp://localhost:3376"));
+		dockerClient.eventsCmd().exec(EventCallBack.callback).awaitCompletion().close();
+
+	}
 }

@@ -3,13 +3,33 @@ package com.panand.docker.envoy.container;
 import java.util.Map;
 
 public class Container {
-	
+
+	private String nodeName;
 	private String containerId;
 	private String fromImage;
 	private String status;
+	private Boolean oOMKilled;
 	private Map<String, String> labels;
 	private Map<String, String> hostExposedPorts;
-	
+
+	public Container(String containerId, String fromImage, String status,
+					 Map<String, String> labels, Map<String, String> hostExposedPorts,
+					 Boolean oOMKilled, String nodeName) {
+		this.nodeName = nodeName;
+		this.containerId = containerId;
+		this.fromImage = fromImage;
+		this.status = status;
+		this.oOMKilled = oOMKilled;
+		this.labels = labels;
+		this.hostExposedPorts = hostExposedPorts;
+	}
+
+	public String getNodeName() {
+		return nodeName;
+	}
+	public void setNodeName(String nodeName) {
+		this.nodeName = nodeName;
+	}
 	public String getContainerId() {
 		return containerId;
 	}
@@ -27,6 +47,12 @@ public class Container {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public Boolean getoOMKilled() {
+		return oOMKilled;
+	}
+	public void setoOMKilled(Boolean oOMKilled) {
+		this.oOMKilled = oOMKilled;
 	}
 	public Map<String, String> getLabels() {
 		return labels;
