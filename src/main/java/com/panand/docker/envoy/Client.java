@@ -2,7 +2,7 @@ package com.panand.docker.envoy;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.core.DockerClientBuilder;
-import com.panand.docker.envoy.container.EnvoyProperties;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +16,11 @@ public class Client {
 
     private final static Logger logger = LoggerFactory.getLogger(Client.class);
 
+    /**
+     * 
+     * @return {@link DockerClient}
+     * @throws IOException
+     */
     public static DockerClient getDockerClient() throws IOException {
         Properties properties = EnvoyProperties.getEnvoyProperties();
 

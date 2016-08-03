@@ -4,7 +4,13 @@ import java.util.Map;
 
 public class Container {
 
+	/**
+	 * Node name on which the event has occurred.
+	 */
 	private String nodeName;
+	/**
+	 * Container ID 
+	 */
 	private String containerId;
 	private String fromImage;
 	private String status;
@@ -24,6 +30,9 @@ public class Container {
 		this.hostExposedPorts = hostExposedPorts;
 	}
 
+	/**
+	 * @return {@link String} node name
+	 */
 	public String getNodeName() {
 		return nodeName;
 	}

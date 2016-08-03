@@ -1,4 +1,4 @@
-package com.panand.docker.envoy.container;
+package com.panand.docker.envoy;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,6 +9,11 @@ import java.util.Properties;
  */
 public class EnvoyProperties {
 
+	/**
+	 *
+	 * @return {@link Properties}
+	 * @throws IOException
+	 */
     public static Properties getEnvoyProperties() throws IOException {
 
         Properties properties = new Properties();
