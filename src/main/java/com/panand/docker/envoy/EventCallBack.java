@@ -16,11 +16,13 @@ public class EventCallBack {
 	public static EventsResultCallback callback = new EventsResultCallback() {
 		@Override
 		public void onNext(Event event) {
-			logger.info("Event: " + event);
-			
-			// TODO handle NPE for unknown event types 
-			EventType eventType = EventFactory.createInstance(event.getType());
-			eventType.generateDatum(event);
+			try{
+				logger.info("Event: " + event);
+				EventType eventType = EventFactory.createInstance(event.getType());
+				eventType.generateDatum(event);
+			} catch(NullPointerException npe) {
+				logger.info("caught npe for event type -- " + event.getType(), npe);
+			}
 			
 		}
 	};

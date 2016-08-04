@@ -15,16 +15,18 @@ public class ContainerEvent extends EventType {
 	
 	@Override
 	public void generateDatum(Event event) {
-		// TODO Auto-generated method stub
+		
 		try {
 			InspectContainer inspectContainer = new InspectContainer(event.getId());
+			//String nodeName = (event.getNode().getName() != null) ? event.getNode().getName() : "default";
+			String nodeName = "default";
 			Container container = new Container(
 					event.getId(), event.getFrom(), event.getStatus(), inspectContainer.getLabels(),
-					inspectContainer.getHostExposedPort(), inspectContainer.getOOMkilled(),
-					event.getNode().getName()
+					inspectContainer.getHostExposedPort(), inspectContainer.getOOMkilled(), nodeName
 			);
 
-			logger.info("container id-" + container.getContainerId() + " ports- " + container.getHostExposedPorts());
+			logger.info("event-" + event.getType() + " container id-" + container.getContainerId() + 
+					" ports- " + container.getHostExposedPorts() + " status-" + event.getStatus());
 		} catch (IOException ioe) {
 			logger.error("Error in InspectContainer", ioe);
 		}

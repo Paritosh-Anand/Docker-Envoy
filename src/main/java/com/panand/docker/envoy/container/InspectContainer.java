@@ -19,6 +19,10 @@ public class InspectContainer {
 
     public InspectContainer(String containerId) throws IOException {
         try {
+        	/*
+        	 *  TODO Check if creating new docker client can 
+        	 *  be avoided here.  
+        	 */
             DockerClient dockerClient = Client.getDockerClient();
             inspectContainer = dockerClient.inspectContainerCmd(containerId).exec();
         } catch (NotFoundException e) {

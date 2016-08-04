@@ -28,7 +28,7 @@ public class Client {
         ConfigBuilder configBuilder = new ConfigBuilder(properties);
 
         DockerClient dockerClient = DockerClientBuilder.getInstance(configBuilder.generateConfigs())
-                .withDockerCmdExecFactory(configBuilder.generateCmdExecFactory())
+                .withDockerCmdExecFactory(DockerClientBuilder.getDefaultDockerCmdExecFactory())
                 .build();
         //DockerClient dockerClient = DockerClientBuilder.getInstance(properties.getProperty("com.docker.envoy.dockerUri")).build();
 
