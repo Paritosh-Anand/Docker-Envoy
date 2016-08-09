@@ -2,7 +2,9 @@ package com.panand.docker.envoy.container;
 
 import java.util.Map;
 
-public class Container {
+import com.panand.docker.envoy.event.Module;
+
+public class Container extends Module {
 
 	/**
 	 * Node name on which the event has occurred.
@@ -11,6 +13,7 @@ public class Container {
 	/**
 	 * Container ID 
 	 */
+	private String eventType;
 	private String containerId;
 	private String fromImage;
 	private String status;
@@ -18,9 +21,10 @@ public class Container {
 	private Map<String, String> labels;
 	private Map<String, String> hostExposedPorts;
 
-	public Container(String containerId, String fromImage, String status,
+	public Container(String eventType, String containerId, String fromImage, String status,
 					 Map<String, String> labels, Map<String, String> hostExposedPorts,
 					 Boolean oOMKilled, String nodeName) {
+		this.eventType = eventType;
 		this.nodeName = nodeName;
 		this.containerId = containerId;
 		this.fromImage = fromImage;
@@ -74,6 +78,12 @@ public class Container {
 	}
 	public void setHostExposedPorts(Map<String, String> hostExposedPorts) {
 		this.hostExposedPorts = hostExposedPorts;
+	}
+	public String getEventType() {
+		return eventType;
+	}
+	public void setEventType(String eventType) {
+		this.eventType = eventType;
 	}
 
 }

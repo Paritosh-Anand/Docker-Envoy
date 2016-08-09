@@ -8,23 +8,22 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
 import com.panand.docker.envoy.EnvoyProperties;
-import com.panand.docker.envoy.event.EventType;
 
 public class YieldEvent {
 
-	Producer<String, EventType> producer;
+	Producer<String, String> producer;
 	
 	/**
-	 * create {@link Producer} object 
+	 * creates {@link Producer} object based on {@link EnvoyProperties} 
 	 * @throws IOException
 	 */
 	public YieldEvent() throws IOException {
 		Properties properties = EnvoyProperties.getEnvoyProperties();
-		producer = new KafkaProducer<>(properties);
+		producer = new KafkaProducer<String, String>(properties);
 	}
 	
-	public void sendEvent(EventType event) {
-		producer.send(new ProducerRecord<String, EventType>("ContainerEvent", "message-key", event));
+	public void sendEvent(String jsonMessage) {
+		producer.send(new ProducerRecord<String, String>("ContainerEvent", "message-key", jsonMessage));
 	}
 	
 }

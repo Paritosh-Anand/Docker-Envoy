@@ -14,23 +14,27 @@ public class ContainerEvent extends EventType {
 	private final static Logger logger = LoggerFactory.getLogger(ContainerEvent.class);
 	
 	@Override
-	public void generateDatum(Event event) {
+	public Module generateDatum(Event event) {
 		
+		Container container = null;
 		try {
 			InspectContainer inspectContainer = new InspectContainer(event.getId());
 			//String nodeName = (event.getNode().getName() != null) ? event.getNode().getName() : "default";
 			String nodeName = "default";
-			Container container = new Container(
+			container = new Container(
+					event.getType(),
 					event.getId(), event.getFrom(), event.getStatus(), inspectContainer.getLabels(),
 					inspectContainer.getHostExposedPort(), inspectContainer.getOOMkilled(), nodeName
 			);
 
 			logger.info("event-" + event.getType() + " container id-" + container.getContainerId() + 
 					" ports- " + container.getHostExposedPorts() + " status-" + event.getStatus());
+			
 		} catch (IOException ioe) {
 			logger.error("Error in InspectContainer", ioe);
-		}
-		
+		} 
+	
+		return container;
 	}
 
 }
