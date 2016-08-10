@@ -2,7 +2,7 @@ package com.panand.docker.envoy;
 
 import com.panand.docker.envoy.event.EventFactory;
 import com.panand.docker.envoy.event.EventType;
-import com.panand.docker.envoy.event.Module;
+import com.panand.docker.envoy.event.Entity;
 import com.panand.docker.envoy.herald.YieldEvent;
 
 import java.io.IOException;
@@ -28,12 +28,12 @@ public class EventCallBack {
 			try{
 				logger.info("Event: " + event);
 				EventType eventType = EventFactory.createInstance(event.getType());
-				Module module = eventType.generateDatum(event);
+				Entity entity = eventType.generateDatum(event);
 				
 				// convert module to JSON string.
 				ObjectMapper mapper = new ObjectMapper();
 
-				String jsonMessage = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(module);
+				String jsonMessage = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(entity);
 				logger.info("json string for module object ---" + jsonMessage);
 				
 				// send message to kafka 

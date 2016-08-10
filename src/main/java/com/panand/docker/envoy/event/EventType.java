@@ -4,7 +4,7 @@ import com.github.dockerjava.api.model.Event;
 
 public abstract class EventType {
 
-	public Module generateDatum(Event event) {
+	public Entity generateDatum(Event event) {
 		// TODO Auto-generated method stub
 		return null;
 	}

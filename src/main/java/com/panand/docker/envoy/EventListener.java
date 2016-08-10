@@ -25,7 +25,7 @@ public class EventListener
 		Properties properties = EnvoyProperties.getEnvoyProperties();
 		DockerClient dockerClient = Client.getDockerClient();
 
-		logger.info("Listening to Docker events on " + properties.getProperty("com.docker.envoy.dockerUri"
+		logger.info("Listening to Docker(" + mode + ") events on " + properties.getProperty("com.docker.envoy.dockerUri"
 				,"tcp://localhost:3376"));
 		dockerClient.eventsCmd().exec(EventCallBack.callback).awaitCompletion().close();
 

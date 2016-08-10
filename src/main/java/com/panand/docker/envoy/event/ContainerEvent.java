@@ -1,6 +1,7 @@
 package com.panand.docker.envoy.event;
 
 import java.io.IOException;
+import java.net.InetAddress;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,15 +15,15 @@ public class ContainerEvent extends EventType {
 	private final static Logger logger = LoggerFactory.getLogger(ContainerEvent.class);
 	
 	@Override
-	public Module generateDatum(Event event) {
+	public Entity generateDatum(Event event) {
 		
 		Container container = null;
 		try {
 			InspectContainer inspectContainer = new InspectContainer(event.getId());
-			//String nodeName = (event.getNode().getName() != null) ? event.getNode().getName() : "default";
-			String nodeName = "default";
+			String nodeName = InetAddress.getLocalHost().getHostName();
+			logger.info("node name -- " + nodeName + " node name from docker event -- " + event.getNode());
 			container = new Container(
-					event.getType(),
+					event.getType(), event.getTime(),
 					event.getId(), event.getFrom(), event.getStatus(), inspectContainer.getLabels(),
 					inspectContainer.getHostExposedPort(), inspectContainer.getOOMkilled(), nodeName
 			);

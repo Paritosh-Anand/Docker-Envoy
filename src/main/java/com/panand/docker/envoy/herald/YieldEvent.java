@@ -2,10 +2,12 @@ package com.panand.docker.envoy.herald;
 
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.Future;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 
 import com.panand.docker.envoy.EnvoyProperties;
 
@@ -35,9 +37,14 @@ public class YieldEvent {
 	 * @param jsonMessage
 	 */
 	public void sendEvent(String topic, String key, String jsonMessage) {
-		producer.send(new ProducerRecord<String, String>(topic, key, jsonMessage));
+		
+		Future<RecordMetadata> future = producer.send(new ProducerRecord<String, String>(topic, key, jsonMessage));
+		
 	}
 	
+	/**
+	 * close {@link KafkaProducer} connection object.
+	 */
 	public void closeKafkaConnection() {
 		if(this.producer != null) {
 			producer.close();
