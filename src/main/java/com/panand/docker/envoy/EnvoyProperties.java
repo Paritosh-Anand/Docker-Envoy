@@ -17,7 +17,7 @@ public class EnvoyProperties {
     public static Properties getEnvoyProperties() throws IOException {
 
         Properties properties = new Properties();
-        FileReader rd = new FileReader("E:\\GitRepos\\Docker-Envoy\\docker.properties");
+        FileReader rd = new FileReader("/Users/paritoshanand/Documents/projects/Docker-Envoy/docker.properties");
         properties.load(rd);
 
         return properties;
