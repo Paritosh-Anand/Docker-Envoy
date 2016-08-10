@@ -1,6 +1,6 @@
 {
   "name": "Docker-envoy",
   "tagline": "Utility to send docker events to kafka.",
-  "body": "# Docker-Envoy\r\nUtility to send docker events to kafka.\r\n\r\nPlan is to create below design.\r\n![Docker Events]\r\n(https://d2mxuefqeaa7sj.cloudfront.net/s_5E4E5D4E7819918F4A7FFC5AD14BA5406AEE511BEF98A38F756ED666B912BEA8_1469560303675_docker+events.PNG)\r\n\r\nJust started on this project, so there may be bugs right now. Will be adding review and test cases soon.\r\n",
+  "body": "# Docker-Envoy [![Build Status](https://travis-ci.org/Paritosh-Anand/Docker-Envoy.svg?branch=master)](https://travis-ci.org/Paritosh-Anand/Docker-Envoy)\r\nUtility to send docker events to kafka.\r\n\r\nPlan is to create left side of the below design. Pushing required Docker events to Kafka will be useful to store/maintain state of services running in Docker ecosystem. Also we can consume events as messages from Kafka and execute desired custom tasks.\r\n![Docker Events]\r\n(https://d2mxuefqeaa7sj.cloudfront.net/s_5E4E5D4E7819918F4A7FFC5AD14BA5406AEE511BEF98A38F756ED666B912BEA8_1469560303675_docker+events.PNG)\r\n\r\nJust started on this project, so there may be bugs right now. Will be adding review and test cases soon.\r\n",
   "note": "Don't delete this file! It's used internally to help with page regeneration."
 }
