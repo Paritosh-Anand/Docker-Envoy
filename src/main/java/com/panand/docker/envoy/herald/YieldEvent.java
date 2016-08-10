@@ -9,9 +9,15 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 
 import com.panand.docker.envoy.EnvoyProperties;
 
+/**
+ * This class handles all transactions happening 
+ * with Kafka.
+ * @author paritoshanand
+ *
+ */
 public class YieldEvent {
 
-	Producer<String, String> producer;
+	private Producer<String, String> producer;
 	
 	/**
 	 * creates {@link Producer} object based on {@link EnvoyProperties} 
@@ -22,8 +28,20 @@ public class YieldEvent {
 		producer = new KafkaProducer<String, String>(properties);
 	}
 	
-	public void sendEvent(String jsonMessage) {
-		producer.send(new ProducerRecord<String, String>("ContainerEvent", "message-key", jsonMessage));
+	/**
+	 * {@link ProducerRecord} to send messages to a kafka topic
+	 * @param topic
+	 * @param key
+	 * @param jsonMessage
+	 */
+	public void sendEvent(String topic, String key, String jsonMessage) {
+		producer.send(new ProducerRecord<String, String>(topic, key, jsonMessage));
+	}
+	
+	public void closeKafkaConnection() {
+		if(this.producer != null) {
+			producer.close();
+		}
 	}
 	
 }

@@ -27,7 +27,7 @@ public class ContainerEvent extends EventType {
 					inspectContainer.getHostExposedPort(), inspectContainer.getOOMkilled(), nodeName
 			);
 
-			logger.info("event-" + event.getType() + " container id-" + container.getContainerId() + 
+			logger.debug("event-" + event.getType() + " container id-" + container.getContainerId() + 
 					" ports- " + container.getHostExposedPorts() + " status-" + event.getStatus());
 			
 		} catch (IOException ioe) {

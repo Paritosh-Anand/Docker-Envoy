@@ -2,9 +2,7 @@ package com.panand.docker.envoy;
 
 import java.util.Properties;
 
-import com.github.dockerjava.api.command.DockerCmdExecFactory;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
-import com.github.dockerjava.jaxrs.DockerCmdExecFactoryImpl;
 
 public class ConfigBuilder {
 	
@@ -32,17 +30,4 @@ public class ConfigBuilder {
 		return clientConfig;
 	}
 
-	/**
-	 * 
-	 * @return {@link DockerCmdExecFactory}
-	 */
-	public DockerCmdExecFactory generateCmdExecFactory() {
-		DockerCmdExecFactory dockerCmdExecFactory = new DockerCmdExecFactoryImpl()
-    			.withReadTimeout(-1)
-    			.withConnectTimeout(1000)
-    			.withMaxTotalConnections(100)
-    			.withMaxPerRouteConnections(10);
-		
-		return dockerCmdExecFactory;
-	}
 }

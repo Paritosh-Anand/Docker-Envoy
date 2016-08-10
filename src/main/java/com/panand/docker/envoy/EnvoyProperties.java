@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Created by MMT5898 on 8/2/2016.
+ * Created by paritoshanand on 8/2/2016.
  */
 public class EnvoyProperties {
 

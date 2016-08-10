@@ -19,6 +19,9 @@ public class EventCallBack {
 
 	private final static Logger logger = LoggerFactory.getLogger(EventCallBack.class);
 
+	/**
+	 * All of the events captured will pass through this callback
+	 */
 	public static EventsResultCallback callback = new EventsResultCallback() {
 		@Override
 		public void onNext(Event event) {
@@ -27,7 +30,7 @@ public class EventCallBack {
 				EventType eventType = EventFactory.createInstance(event.getType());
 				Module module = eventType.generateDatum(event);
 				
-				// TODO convert module pojo to json.
+				// convert module to JSON string.
 				ObjectMapper mapper = new ObjectMapper();
 
 				String jsonMessage = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(module);
@@ -35,7 +38,7 @@ public class EventCallBack {
 				
 				// send message to kafka 
 				YieldEvent yieldEvent = new YieldEvent();
-				yieldEvent.sendEvent(jsonMessage);
+				yieldEvent.sendEvent(event.getType(), event.getId(), jsonMessage);
 				
 			} catch(NullPointerException npe) {
 				logger.error("caught npe for event type -- " + event.getType(), npe);
