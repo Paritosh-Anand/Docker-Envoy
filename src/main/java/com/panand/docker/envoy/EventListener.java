@@ -17,15 +17,11 @@ public class EventListener
 	private final static Logger logger = LoggerFactory.getLogger(EventListener.class);
 	public static void main(String[] args) throws IOException, InterruptedException {
 		
-		String mode = "single-node";
-		if(args.length > 0){ 
-			mode = args[0];
-		}
-
 		Properties properties = EnvoyProperties.getEnvoyProperties();
 		DockerClient dockerClient = Client.getDockerClient();
 
-		logger.info("Listening to Docker(" + mode + ") events on " + properties.getProperty("com.docker.envoy.dockerUri"
+		logger.info("Listening to Docker(" + properties.getProperty("com.docker.envoy.mode") + ") "
+				+ "events on " + properties.getProperty("com.docker.envoy.dockerUri"
 				,"tcp://localhost:3376"));
 		dockerClient.eventsCmd().exec(EventCallBack.callback).awaitCompletion().close();
 
