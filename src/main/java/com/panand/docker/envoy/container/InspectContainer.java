@@ -17,6 +17,11 @@ import java.util.Map;
 public class InspectContainer {
     InspectContainerResponse inspectContainer;
 
+    /**
+     * runs docker inspect for a container id and provides required data.
+     * @param containerId
+     * @throws IOException
+     */
     public InspectContainer(String containerId) throws IOException {
         try {
         	/*

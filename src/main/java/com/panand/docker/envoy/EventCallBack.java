@@ -5,8 +5,6 @@ import com.panand.docker.envoy.event.EventType;
 import com.panand.docker.envoy.event.Entity;
 import com.panand.docker.envoy.herald.YieldEvent;
 
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,15 +35,12 @@ public class EventCallBack {
 				logger.info("json string for module object ---" + jsonMessage);
 				
 				// send message to kafka 
-				YieldEvent yieldEvent = new YieldEvent();
-				yieldEvent.sendEvent(event.getType(), event.getId(), jsonMessage);
+				YieldEvent.sendEvent(event.getType(), event.getId(), jsonMessage);
 				
 			} catch(NullPointerException npe) {
 				logger.error("caught npe for event type -- " + event.getType(), npe);
 			} catch (JsonProcessingException e) {
 				logger.error("caught error while json processing -- " + event.getType(), e);
-			} catch (IOException e) {
-				logger.error("caught error while sending message to kafka -- " + event.getType(), e);
 			}
 			
 		}

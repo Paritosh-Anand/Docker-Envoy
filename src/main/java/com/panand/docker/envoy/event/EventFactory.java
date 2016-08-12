@@ -7,6 +7,11 @@ package com.panand.docker.envoy.event;
  */
 public class EventFactory {
 
+	/**
+	 * 
+	 * @param eventType
+	 * @return {@link EventType}
+	 */
 	public static EventType createInstance(String eventType) {
 
 		if(eventType.equalsIgnoreCase("container")) {
