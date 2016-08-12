@@ -1,8 +1,8 @@
 package com.panand.docker.envoy.event;
 
 import com.github.dockerjava.api.model.Event;
-import com.panand.docker.auxillary.Auxillary;
 import com.panand.docker.envoy.EnvoyEnv;
+import com.panand.docker.envoy.auxillary.Auxillary;
 
 public class AuxillaryEvent extends EventType {
 

@@ -1,4 +1,4 @@
-package com.panand.docker.auxillary;
+package com.panand.docker.envoy.auxillary;
 
 import com.panand.docker.envoy.event.Entity;
 
