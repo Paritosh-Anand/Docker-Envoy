@@ -21,6 +21,7 @@ public class InspectContainer {
      * runs docker inspect for a container id and provides required data.
      * @param containerId
      * @throws IOException
+     * @throws NullPointerException
      */
     public InspectContainer(String containerId) throws IOException {
         try {
@@ -30,6 +31,7 @@ public class InspectContainer {
         	 */
             DockerClient dockerClient = Client.getDockerClient();
             inspectContainer = dockerClient.inspectContainerCmd(containerId).exec();
+            
         } catch (NotFoundException e) {
             throw new NullPointerException("container not found");
         }
@@ -43,8 +45,8 @@ public class InspectContainer {
         return inspectContainer.getImageId();
     }
 
-    public Ports getPorts(){
-        return inspectContainer.getNetworkSettings().getPorts();
+    public Map<ExposedPort, Ports.Binding[]> getPorts(){
+        return inspectContainer.getNetworkSettings().getPorts().getBindings();
     }
 
     public Map<ExposedPort, Ports.Binding[]> getHostPortBindings(){
@@ -59,6 +61,20 @@ public class InspectContainer {
             portInfo.put(String.valueOf(exposedPort.getPort()), portBindings.get(exposedPort)[0].getHostPortSpec());
         }
         return portInfo;
+    }
+    
+    public HashMap<String, String> getHostPort() {
+    	HashMap<String, String> portInfo = new HashMap<String, String>();
+    	try {
+	    	Map<ExposedPort, Ports.Binding[]> portBindings = getPorts();
+	    	
+	    	for(ExposedPort exposedPort: portBindings.keySet()) {
+	    		portInfo.put(String.valueOf(exposedPort.getPort()), portBindings.get(exposedPort)[0].getHostPortSpec());
+	    	}
+    	} catch (NullPointerException e) {
+    		//caught npe while getting ports from network settings
+    	}
+    	return portInfo;
     }
 
     public Map<String, String> getLabels() {

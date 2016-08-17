@@ -20,10 +20,11 @@ public class Container extends Entity {
 	private String status;
 	private Boolean oOMKilled;
 	private Map<String, String> labels;
+	private Map<String, String> hostPorts;
 	private Map<String, String> hostExposedPorts;
 
 	public Container(String eventType, Long eventTime, String containerId,
-			String fromImage, String status,Map<String, String> labels,
+			String fromImage, String status,Map<String, String> labels, Map<String, String> hostPorts,
 			Map<String, String> hostExposedPorts, Boolean oOMKilled, String nodeName) {
 		this.eventType = eventType;
 		this.eventTime = eventTime;
@@ -33,6 +34,7 @@ public class Container extends Entity {
 		this.status = status;
 		this.oOMKilled = oOMKilled;
 		this.labels = labels;
+		this.hostPorts = hostPorts;
 		this.hostExposedPorts = hostExposedPorts;
 	}
 
@@ -110,5 +112,14 @@ public class Container extends Entity {
 	public void setEventTime(Long eventTime) {
 		this.eventTime = eventTime;
 	}
+	
+	public Map<String, String> getHostPorts() {
+		return hostPorts;
+	}
+
+	public void setHostPorts(Map<String, String> hostPorts) {
+		this.hostPorts = hostPorts;
+	}
+
 
 }

@@ -9,15 +9,18 @@ public class EnvoyEnv {
 
 	public static String getHostName(Event event) {
 		
-		if(event.getNode().getName() != null) {
-			return event.getNode().getName();
-		} else {
-			try {
-				return InetAddress.getLocalHost().getHostName();
-			} catch (UnknownHostException e) {
-				return "default";
+		try {
+			if(event.getNode().getName() != null) {
+				return event.getNode().getName();
+			} else {
+				try {
+					return InetAddress.getLocalHost().getHostName();
+				} catch (UnknownHostException e) {
+					return "default";
+				}
 			}
+		} catch(NullPointerException e) {
+			return "default";
 		}
-		
 	}
 }
