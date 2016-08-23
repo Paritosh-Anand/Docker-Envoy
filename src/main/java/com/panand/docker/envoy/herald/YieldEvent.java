@@ -1,6 +1,7 @@
 package com.panand.docker.envoy.herald;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import com.panand.docker.envoy.EnvoyProperties;
 
+
 /**
  * This class handles all transactions happening 
  * with Kafka.
@@ -22,7 +24,7 @@ public class YieldEvent {
 
 	private final static Logger logger = LoggerFactory.getLogger(YieldEvent.class);
 	
-	private static Producer<String, String> producer;
+	private static Producer<String, byte[]> producer;
 	
 	/**
 	 * creates {@link Producer} object based on {@link EnvoyProperties} 
@@ -31,7 +33,7 @@ public class YieldEvent {
 	public static void createKafkaProducer() throws IOException {
 		logger.info("creating kafka producer object based on envoy properties");
 		Properties properties = EnvoyProperties.getEnvoyProperties();
-		producer = new KafkaProducer<String, String>(properties);
+		producer = new KafkaProducer<String, byte[]>(properties);
 	}
 	
 	/**
@@ -41,7 +43,7 @@ public class YieldEvent {
 	 * @param jsonMessage
 	 */
 	public static void sendEvent(String topic, String key, String jsonMessage) {
-		producer.send(new ProducerRecord<String, String>(topic, key, jsonMessage));
+		producer.send(new ProducerRecord<String, byte[]>(topic, key, jsonMessage.getBytes(StandardCharsets.UTF_8)));
 	}
 	
 	/**
