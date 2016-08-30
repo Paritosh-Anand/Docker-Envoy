@@ -1,6 +1,7 @@
 package com.panand.docker.envoy.herald;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
@@ -24,7 +25,10 @@ public class YieldEvent {
 
 	private final static Logger logger = LoggerFactory.getLogger(YieldEvent.class);
 	
-	private static Producer<String, byte[]> producer;
+	/**
+	 * Using {@link ByteBuffer} as per Apache Storm 1.x.x
+	 */
+	private static Producer<String, ByteBuffer> producer;
 	
 	/**
 	 * creates {@link Producer} object based on {@link EnvoyProperties} 
@@ -33,17 +37,19 @@ public class YieldEvent {
 	public static void createKafkaProducer() throws IOException {
 		logger.info("creating kafka producer object based on envoy properties");
 		Properties properties = EnvoyProperties.getEnvoyProperties();
-		producer = new KafkaProducer<String, byte[]>(properties);
+		producer = new KafkaProducer<String, ByteBuffer>(properties);
 	}
 	
 	/**
-	 * {@link ProducerRecord} to send messages to a kafka topic
+	 * {@link ProducerRecord} to send messages async to a kafka topic
+	 * converts json message to {@link ByteBuffer} 
 	 * @param topic
 	 * @param key
 	 * @param jsonMessage
 	 */
 	public static void sendEvent(String topic, String key, String jsonMessage) {
-		producer.send(new ProducerRecord<String, byte[]>(topic, key, jsonMessage.getBytes(StandardCharsets.UTF_8)));
+		ByteBuffer bBuffer = ByteBuffer.wrap(jsonMessage.getBytes(StandardCharsets.UTF_8));
+		producer.send(new ProducerRecord<String, ByteBuffer>(topic, key, bBuffer));
 	}
 	
 	/**
