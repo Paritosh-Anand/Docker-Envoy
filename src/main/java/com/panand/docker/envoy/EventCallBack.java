@@ -25,7 +25,7 @@ public class EventCallBack {
 		public void onNext(Event event) {
 			try{
 				logger.info("Event: " + event);
-				EventType eventType = EventFactory.createInstance(event.getType());
+				EventType eventType = EventFactory.createInstance(event.getType().getValue());
 				Entity entity = eventType.generateDatum(event);
 				
 				// convert module to JSON string.
@@ -35,7 +35,7 @@ public class EventCallBack {
 				logger.info("json string for module object ---" + jsonMessage);
 				
 				// send message to kafka 
-				YieldEvent.sendEvent(event.getType(), event.getId(), jsonMessage);
+				YieldEvent.sendEvent(event.getType().getValue(), event.getId(), jsonMessage);
 				
 			} catch(NullPointerException npe) {
 				logger.error("caught npe for event type -- " + event.getType(), npe);

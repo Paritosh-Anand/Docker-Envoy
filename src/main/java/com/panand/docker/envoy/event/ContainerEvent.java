@@ -38,7 +38,7 @@ public class ContainerEvent extends EventType {
 		}
 		
 		container = new Container(
-			event.getType(), event.getTime(), event.getId(),
+			event.getType().getValue(), event.getTime(), event.getId(),
 			event.getFrom(), event.getStatus(), labels,
 			hostPorts, hostExposedPorts, oOMkilled, EnvoyEnv.getHostName(event)
 		);
