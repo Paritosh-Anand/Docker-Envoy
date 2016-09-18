@@ -23,7 +23,7 @@ public class ConfigBuilder {
 
 		DefaultDockerClientConfig clientConfig = DefaultDockerClientConfig.createDefaultConfigBuilder()
 				.withDockerHost(properties.getProperty("com.docker.envoy.dockerUri"))
-    			.withDockerTlsVerify(Boolean.getBoolean(properties.getProperty("com.docker.envoy.tlsverify")))
+    			.withDockerTlsVerify(Boolean.parseBoolean(properties.getProperty("com.docker.envoy.tlsverify")))
     			.withDockerCertPath(properties.getProperty("com.docker.envoy.certpath"))
     			.build();
 
