@@ -20,5 +20,33 @@ sample messages that are being pushed to kafka
   "hostExposedPorts" : { }
 }
 ```
+## Configuration
+Configurations regarding Docker engine and kafka are defined in `docker.properties`. Make sure these configurations are correct
+Docker related configurations:
 
-Just started on this project, so there may be bugs right now. Will be adding review and test cases soon.
+* com.docker.envoy.dockerUri: Docker engine's endpoint.
+* com.docker.envoy.tlsverify: set it to true if Docker engine is secured via ca certificates.
+* com.docker.envoy.certpath: location to certs, required if tlsverify is set to true.
+
+Kafka related configurations(these are standard configuration required to create KafkaProducer):
+
+* metadata.broker.list
+* serializer.class
+* partitioner.class
+* request.required.acks
+
+## Documentation
+
+Run `com.panand.docker.envoy.EventListener` class after configuring `docker.properties` with correct pointing to Docker host and Kafka broker list.
+
+Topic names that will be created on Apache Kafka will be in sync with Docker terminology for e.g. container, network, images.
+
+## Roadmap
+Docker Envoy aims to make *customized processing* over Docker events feasible. Design enables to publish events to Apache Kafka, this happens instantly (i.e. NRT). This project can run as an agent on each of the Docker hosts and publish messages to a single Kafka cluster.
+
+Since this project has the capability to process each event before-hand and publish more meaningful messages to Kafka. We can write Apache Storm topologies to consume these messages and do required processing something like [Docker-Serf](https://github.com/Paritosh-Anand/Docker-Serf).
+
+## Community
+Contributions, questions, and comments are all welcomed and encouraged! Do open issues/pull requests for any concerns.
+
+Just started on this project, so there may be bugs right now. Will be adding test cases soon.
