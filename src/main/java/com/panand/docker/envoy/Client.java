@@ -15,6 +15,8 @@ import java.util.Properties;
 public class Client {
 
     private final static Logger logger = LoggerFactory.getLogger(Client.class);
+    
+    private static final String CONFIG_FILE = "docker.properties";
 
     /**
      * Creates a {@link DockerClient} based on {@link EnvoyProperties}
@@ -22,7 +24,9 @@ public class Client {
      * @throws IOException
      */
     public static DockerClient getDockerClient() throws IOException {
-        Properties properties = EnvoyProperties.getEnvoyProperties();
+    	
+        Properties properties = new Properties();
+        properties.load(EventListener.class.getClassLoader().getResourceAsStream(CONFIG_FILE));
 
         logger.info("Listening to Docker events on " + properties.getProperty("com.docker.envoy.dockerUri"));
         ConfigBuilder configBuilder = new ConfigBuilder(properties);

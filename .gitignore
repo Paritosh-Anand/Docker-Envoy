@@ -12,3 +12,9 @@
 hs_err_pid*
 
 target/*
+/target/
+
+.classpath
+.project
+.settings/
+dependency-reduced-pom.xml

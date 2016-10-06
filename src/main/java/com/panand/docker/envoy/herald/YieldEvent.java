@@ -2,22 +2,18 @@ package com.panand.docker.envoy.herald;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerRecord;
+import kafka.javaapi.producer.Producer;
+import kafka.producer.KeyedMessage;
+import kafka.producer.ProducerConfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.panand.docker.envoy.EnvoyProperties;
-
-
 /**
  * This class handles all transactions happening 
- * with Kafka.
+ * with Kafka version 0.8.2.1
  * @author paritoshanand
  *
  */
@@ -25,31 +21,29 @@ public class YieldEvent {
 
 	private final static Logger logger = LoggerFactory.getLogger(YieldEvent.class);
 	
-	/**
-	 * Using {@link ByteBuffer} as per Apache Storm 1.x.x
-	 */
-	private static Producer<String, ByteBuffer> producer;
+	private static Producer<String, String> producer;
 	
 	/**
 	 * creates {@link Producer} object based on {@link EnvoyProperties} 
 	 * @throws IOException
 	 */
-	public static void createKafkaProducer() throws IOException {
+	public static void createKafkaProducer(Properties properties) throws IOException {
 		logger.info("creating kafka producer object based on envoy properties");
-		Properties properties = EnvoyProperties.getEnvoyProperties();
-		producer = new KafkaProducer<String, ByteBuffer>(properties);
+		ProducerConfig config = new ProducerConfig(properties);
+		
+		producer = new Producer<String, String>(config);
 	}
 	
 	/**
-	 * {@link ProducerRecord} to send messages async to a kafka topic
-	 * converts json message to {@link ByteBuffer} 
+	 * {@link KeyedMessage} to send messages async to a kafka topic
+	 * converts JSON message to {@link ByteBuffer} 
 	 * @param topic
 	 * @param key
 	 * @param jsonMessage
 	 */
 	public static void sendEvent(String topic, String key, String jsonMessage) {
-		ByteBuffer bBuffer = ByteBuffer.wrap(jsonMessage.getBytes(StandardCharsets.UTF_8));
-		producer.send(new ProducerRecord<String, ByteBuffer>(topic, key, bBuffer));
+		KeyedMessage<String, String> data = new KeyedMessage<String, String>(topic, key, jsonMessage);
+		producer.send(data);
 	}
 	
 	/**
