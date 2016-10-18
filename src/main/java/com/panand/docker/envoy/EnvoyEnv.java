@@ -10,17 +10,13 @@ public class EnvoyEnv {
 	public static String getHostName(Event event) {
 		
 		try {
-			if(event.getNode().getName() != null) {
-				return event.getNode().getName();
-			} else {
-				try {
-					return InetAddress.getLocalHost().getHostName();
-				} catch (UnknownHostException e) {
-					return "default";
-				}
-			}
+			return event.getNode().getName();
 		} catch(NullPointerException e) {
-			return "default";
+			try {
+				return InetAddress.getLocalHost().getHostName();
+			} catch (UnknownHostException e1) {
+				return "default";
+			}
 		}
 	}
 }

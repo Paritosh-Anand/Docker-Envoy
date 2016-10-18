@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Properties;
 
+import kafka.common.FailedToSendMessageException;
 import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
@@ -42,8 +43,14 @@ public class YieldEvent {
 	 * @param jsonMessage
 	 */
 	public static void sendEvent(String topic, String key, String jsonMessage) {
-		KeyedMessage<String, String> data = new KeyedMessage<String, String>(topic, key, jsonMessage);
-		producer.send(data);
+		try {
+			KeyedMessage<String, String> data = new KeyedMessage<String, String>(topic, key, jsonMessage);
+			producer.send(data);
+		} catch (FailedToSendMessageException e) {
+			logger.error("Message not sent to Kafka", e);
+		} catch (Exception e) {
+			logger.error("Message not sent to Kafka", e);
+		}
 	}
 	
 	/**

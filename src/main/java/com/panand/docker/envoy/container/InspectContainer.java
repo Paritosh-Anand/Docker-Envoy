@@ -11,10 +11,15 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 /**
  * Created by paritoshanand on 8/2/2016.
  */
 public class InspectContainer {
+	
+	private static Logger logger = Logger.getLogger(InspectContainer.class.getName());
+	
     InspectContainerResponse inspectContainer;
 
     /**
@@ -26,10 +31,10 @@ public class InspectContainer {
     public InspectContainer(String containerId) throws IOException {
         try {
         	/*
-        	 *  TODO Check if creating new docker client can 
-        	 *  be avoided here.  
+        	 *  TODO Check if creating new docker client can be avoided here.  
         	 */
             DockerClient dockerClient = Client.getDockerClient();
+            logger.info("docker inspect container - " + containerId);
             inspectContainer = dockerClient.inspectContainerCmd(containerId).exec();
             
         } catch (NotFoundException e) {
